@@ -93,7 +93,7 @@ local TEXT_RAID_COLORS = {
   CleanChat_CreateClassColor("MAGE"),
   CleanChat_CreateClassColor("ROGUE"),
   CleanChat_CreateClassColor("DRUID"),
-  CleanChat_CreateClassColor("SHAMAN"),
+  "|cff0070de",
   CleanChat_CreateClassColor("WARRIOR")
 };
 
