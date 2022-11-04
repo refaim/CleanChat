@@ -8,7 +8,7 @@ if GetLocale() == "deDE" then
   BINDING_NAME_CLEANCHAT_URL = "URL-Liste anzeigen / schliessen";
   CLEANCHAT_URL_STATUS1 = "URL mit Linksklick ausw\195\164hlen.";
   CLEANCHAT_URL_STATUS2 = "Dr\195\188cke jetzt STRG-C um den URL zu kopieren.";
-  CLEANCHAT_NO_URL = "-- Kein URL gefunden --";  
+  CLEANCHAT_NO_URL = "-- Kein URL gefunden --";
 
   CLEANCHAT_WHO_RESULTS_PATTERN = "%d+ Spieler gesamt";
 
@@ -91,12 +91,12 @@ if GetLocale() == "deDE" then
     [false] = CHAT_BATTLEGROUND_GET,
     [true]  = "[BG] %s:\32"
   };
-  
+
   CLEANCHAT_PREFIX_BGLEADER = {
     [false] = CHAT_BATTLEGROUND_LEADER_GET,
     [true]  = "[BGL] %s:\32"
   };
-    
+
   CLEANCHAT_HELP = { HIGHLIGHT_FONT_COLOR_CODE .. "/cleanchat" .. LIGHTYELLOW_FONT_COLOR_CODE .. "- GUI anzeigen." };
 
   CLEANCHAT_STATUS3 = {

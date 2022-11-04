@@ -16,7 +16,7 @@ function CleanChat_Korean_StripRealm(name)
   --end
   --return name;
   --
-  -- 
+  --
   -- I have no clue how cross realm name looks in Korean version,
   -- please fill in the code if possible.
   -- Thank you very much.
@@ -54,7 +54,7 @@ if GetLocale() == "koKR" then
   BINDING_NAME_CLEANCHAT_URL = "Toggle URL list";
   CLEANCHAT_URL_STATUS1 = "Left click to select a URL.";
   CLEANCHAT_URL_STATUS2 = "Press CTRL-C to copy the URL.";
-  CLEANCHAT_NO_URL = "-- No URL --";  
+  CLEANCHAT_NO_URL = "-- No URL --";
 
   CLEANCHAT_WHO_RESULTS_PATTERN = "모두 %d+명의 플레이어";
 
@@ -138,7 +138,7 @@ if GetLocale() == "koKR" then
     [false] = CHAT_BATTLEGROUND_GET,
     [true]  = "[BG] %s:\32"
   };
-  
+
   CLEANCHAT_PREFIX_BGLEADER = {
     [false] = CHAT_BATTLEGROUND_LEADER_GET,
     [true]  = "[BGL] %s:\32"
@@ -156,7 +156,7 @@ if GetLocale() == "koKR" then
   CLEANCHAT_STATUS2A = {
     [true] = "대화명의 색상을 변경합니다.",
     [false] = "대화명의 색상을 변경하지 않습니다." };
-  
+
   CLEANCHAT_STATUS2B = {
     [true] = { [true] = "직업별 색상을 사용합니다.",
     [false] = "직업별 색상을 사용하지 않습니다." },

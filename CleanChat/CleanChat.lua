@@ -15,7 +15,7 @@
 
 -- December 20, 2018:
 -- fix for Light's Hope WoW Vanialla server (old client use math.mod instead math.fmod)
--- 
+--
 
 local TIMEOUT_ONE_HOUR = 60 * 60; -- 60 minutes
 local TIMEOUT_THREE_DAYS = 60 * 60 * 24 * 3; -- three days
@@ -82,7 +82,7 @@ end
 local function CleanChat_CreateClassColor(className)
   return "|cff" .. CleanChat_ToHex(math.floor(255 * RAID_CLASS_COLORS[className].r))
                 .. CleanChat_ToHex(math.floor(255 * RAID_CLASS_COLORS[className].g))
-				.. CleanChat_ToHex(math.floor(255 * RAID_CLASS_COLORS[className].b))
+                .. CleanChat_ToHex(math.floor(255 * RAID_CLASS_COLORS[className].b))
 end
 
 local TEXT_RAID_COLORS = {
@@ -118,7 +118,7 @@ function CleanChat_OnLoad()
   this:RegisterEvent("CHAT_MSG_SYSTEM");
   this:RegisterEvent("PLAYER_ENTERING_WORLD");
   this:RegisterEvent("PLAYER_LEVEL_UP");
-  
+
   ChatFrame_OnEvent_Org = ChatFrame_OnEvent;
   ChatFrame_OnEvent = CleanChat_ChatFrame_OnEvent;
 
@@ -130,7 +130,7 @@ function CleanChat_OnLoad()
 
   ChatFrame_OnHyperlinkShow_Org = ChatFrame_OnHyperlinkShow;
   ChatFrame_OnHyperlinkShow = CleanChat_ChatFrame_OnHyperlinkShow;
-  
+
   math.randomseed(time());
 
   CleanChat_HideChatButtons = false;
@@ -150,16 +150,16 @@ function CleanChat_OnLoad()
   CleanChat_NameCache = {};
   CleanChat_UsedColors = {};
   CleanChat_URLs = {};
-  
+
   table.insert(CleanChat_URLs, CLEANCHAT_NO_URL);
   table.insert(CleanChat_URLs, CLEANCHAT_NO_URL);
   table.insert(CleanChat_URLs, CLEANCHAT_NO_URL);
   table.insert(CleanChat_URLs, CLEANCHAT_NO_URL);
   table.insert(CleanChat_URLs, CLEANCHAT_NO_URL);
-  
+
   CleanChat_InsertPartyMembers();
   CleanChat_InsertRaidMembers();
-  
+
   SlashCmdList["CLEANCHAT"] = CleanChat_ChatCommand;
   SLASH_CLEANCHAT1 = "/cleanchat";
 end
@@ -179,29 +179,29 @@ end
 function CleanChat_AddURL(url)
   if url then
     -- check if URL is alrready in list
-	isAlreadyInList = false;
-	for _, url2 in ipairs(CleanChat_URLs) do
-	  if url == url2 then
-	    isAlreadyInList = true;
-		break;
-	  end
-	end
-	if not isAlreadyInList then
-	  table.insert(CleanChat_URLs, 1, url);
-	  table.remove(CleanChat_URLs); -- keep only a few entries
+    isAlreadyInList = false;
+    for _, url2 in ipairs(CleanChat_URLs) do
+      if url == url2 then
+        isAlreadyInList = true;
+        break;
+      end
+    end
+    if not isAlreadyInList then
+      table.insert(CleanChat_URLs, 1, url);
+      table.remove(CleanChat_URLs); -- keep only a few entries
       if CleanChatURLFrame:IsVisible() then
         CleanChat_URL_Update();
       end
-	end
+    end
   end
 end
 
 function CleanChat_CopyURL(index)
   if CleanChat_URLs[index] ~= CLEANCHAT_NO_URL then
     CleanChatURLStatus:SetText(CLEANCHAT_URL_STATUS2);
-	CleanChat_URL_EditBox:SetText(CleanChat_URLs[index]);
-	CleanChat_URL_EditBox:HighlightText();
-	CleanChat_URL_EditBox:SetFocus();
+    CleanChat_URL_EditBox:SetText(CleanChat_URLs[index]);
+    CleanChat_URL_EditBox:HighlightText();
+    CleanChat_URL_EditBox:SetFocus();
     PlaySound("gsTitleOptionOK");
   end
 end
@@ -210,13 +210,13 @@ function CleanChat_ChatFrame_OnHyperlinkShow(reference, link, button)
   local _, _, possibleURL = string.find(reference, "cleanchatURL:(.*)");
   if possibleURL then
     CleanChatURLFrame:Show();
-	for index, url in ipairs(CleanChat_URLs) do
-	  if url == possibleURL then
-	    CleanChat_CopyURL(index);
-	  end
-	end
+    for index, url in ipairs(CleanChat_URLs) do
+      if url == possibleURL then
+        CleanChat_CopyURL(index);
+      end
+    end
   else
-    ChatFrame_OnHyperlinkShow_Org(reference, link, button);	
+    ChatFrame_OnHyperlinkShow_Org(reference, link, button);
   end
 end
 
@@ -245,7 +245,7 @@ function CleanChat_SetupPrefix(isHidePrefix)
   CHAT_GUILD_GET = CLEANCHAT_PREFIX_GUILD[isHidePrefix];
   CHAT_RAID_LEADER_GET = CLEANCHAT_PREFIX_RAIDLEADER[isHidePrefix];
   CHAT_RAID_WARNING_GET = CLEANCHAT_PREFIX_RAIDWARNING[isHidePrefix];
-  CHAT_BATTLEGROUND_GET = CLEANCHAT_PREFIX_BG[isHidePrefix]; 
+  CHAT_BATTLEGROUND_GET = CLEANCHAT_PREFIX_BG[isHidePrefix];
   CHAT_BATTLEGROUND_LEADER_GET = CLEANCHAT_PREFIX_BGLEADER[isHidePrefix];
 end
 
@@ -349,7 +349,7 @@ function CleanChat_OnEvent(event)
   elseif event == "CHAT_MSG_SYSTEM" and string.find(arg1, CLEANCHAT_WHO_RESULTS_PATTERN) then
     CleanChat_AddWhoResultsToDatabase()
   elseif event == "PLAYER_LEVEL_UP" then
-	CleanChat_AddFlag("level", arg1, UnitName("player"));   
+    CleanChat_AddFlag("level", arg1, UnitName("player"));
   elseif event == "PLAYER_ENTERING_WORLD" then
     local _, class = UnitClass("player");
     CleanChat_AddFlag("class", CLASS_TO_INDEX[class], UnitName("player"));
@@ -598,15 +598,15 @@ function CleanChat_AddMessage(this, msg, r, g, b, id)
   CleanChat_AddURL(url2);
   CleanChat_AddURL(url1);
   if (url1) then
-      msg = string.gsub(msg, "(.-)(%w+%.%a%a%a?/?%S*)(.*)", "%1|cffffffff|HcleanchatURL:" .. url1 .. "|h" .. url1 .. "|h|r%3");    
+      msg = string.gsub(msg, "(.-)(%w+%.%a%a%a?/?%S*)(.*)", "%1|cffffffff|HcleanchatURL:" .. url1 .. "|h" .. url1 .. "|h|r%3");
   end
   if (url2) then
-      msg = string.gsub(msg, "(.*) (%w+%.%a%a%a?/?%S*)(.*)", "%1 |cffffffff|HcleanchatURL:" .. url2 .. "|h" .. url2 .. "|h|r%3");    
+      msg = string.gsub(msg, "(.*) (%w+%.%a%a%a?/?%S*)(.*)", "%1 |cffffffff|HcleanchatURL:" .. url2 .. "|h" .. url2 .. "|h|r%3");
   end
   if (url3) then
-      msg = string.gsub(msg, "(.-) (%d+%.%d+.%d+.%d+%S*)(.*)", "%1 |cffffffff|HcleanchatURL:" .. url3 .. "|h" .. url3 .. "|h|r%3");    
+      msg = string.gsub(msg, "(.-) (%d+%.%d+.%d+.%d+%S*)(.*)", "%1 |cffffffff|HcleanchatURL:" .. url3 .. "|h" .. url3 .. "|h|r%3");
   end
-    
+
   -- Every 5 minutes remove old entries
   if not CleanChat_IsPersistent and GetTime() > nextPurgeCheck then
     CleanChat_CacheRemoveOlderEntries();
@@ -702,7 +702,7 @@ function CleanChat_GetReadableColor(name)
   local fg_g = 0;
   local fg_b = 0;
 
-  if math.fmod then 
+  if math.fmod then
     fg_r = math.floor(math.fmod(hash / 97, 255));
     fg_g = math.floor(math.fmod(hash / 17, 255));
     fg_b = math.floor(math.fmod(hash / 227, 255));
@@ -710,7 +710,7 @@ function CleanChat_GetReadableColor(name)
     fg_r = math.floor(math.mod(hash / 97, 255));
     fg_g = math.floor(math.mod(hash / 17, 255));
     fg_b = math.floor(math.mod(hash / 227, 255));
-  end  
+  end
 
   -- if contrast below XX then invert rgb values.
   -- max value value to check against is 127.

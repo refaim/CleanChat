@@ -10,8 +10,8 @@ if GetLocale() == "frFR" then
   BINDING_NAME_CLEANCHAT_URL = "Toggle URL list";
   CLEANCHAT_URL_STATUS1 = "Left click to select a URL.";
   CLEANCHAT_URL_STATUS2 = "Press CTRL-C to copy the URL.";
-  CLEANCHAT_NO_URL = "-- No URL --";  
-  
+  CLEANCHAT_NO_URL = "-- No URL --";
+
   CLEANCHAT_WHO_RESULTS_PATTERN = "%d+ joueur[s]? au total";
 
   CLEANCHAT_TRANSLATE_CLASS = {
@@ -93,7 +93,7 @@ if GetLocale() == "frFR" then
     [false] = CHAT_BATTLEGROUND_GET,
     [true]  = "[BG] %s:\32"
   };
-  
+
   CLEANCHAT_PREFIX_BGLEADER = {
     [false] = CHAT_BATTLEGROUND_LEADER_GET,
     [true]  = "[BGL] %s:\32"
