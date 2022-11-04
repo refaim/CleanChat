@@ -116,6 +116,7 @@
   CLEANCHAT_HIDE_CHATBUTTONS = "Hide chat buttons.";
   CLEANCHAT_COLLECTDATA = "Allow addon to use /who command."
   CLEANCHAT_SHOWLEVEL = "Show level in chat.";
+  CLEANCHAT_SHOWFACTION = "Show faction in chat."
   CLEANCHAT_MOUSEWHEEL = "Use mouse wheel to scroll.";
   CLEANCHAT_PERSISTENT = "Save collected data.";
   CLEANCHAT_POPUP = "Show chat message on screen if it contains your name.";

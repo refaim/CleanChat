@@ -63,6 +63,19 @@ local EVENTS_EMOTES = {
   ["CHAT_MSG_RAID_BOSS_EMOTE"] = true
 };
 
+local CLEANCHAT_RACE_TO_FACTION = {
+  ["Dwarf"] = "Alliance",
+  ["Gnome"] = "Alliance",
+  ["Goblin"] = "Horde",
+  ["High Elf"] = "Alliance",
+  ["Human"] = "Alliance",
+  ["Night Elf"] = "Alliance",
+  ["Orc"] = "Horde",
+  ["Tauren"] = "Horde",
+  ["Troll"] = "Horde",
+  ["Undead"] = "Horde",
+};
+
 -- works only for numbers between 0-255;
 local CLEANCHAT_HEX = { [0] = "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
 function CleanChat_ToHex(number)
@@ -142,6 +155,7 @@ function CleanChat_OnLoad()
   CleanChat_HideChannelnames = 1;
   CleanChat_Colors = {};
   CleanChat_ShowLevel = false;
+  CleanChat_ShowFaction = false;
   CleanChat_CollectData = false;
   CleanChat_EnableMouseWheel = false;
   CleanChat_IsPersistent = false;
@@ -324,6 +338,7 @@ function CleanChat_AddWhoResultsToDatabase()
       --CleanChat_Message("Adding level " ..level .. " class " .. CLEANCHAT_TRANSLATE_CLASS[class] .. " for " .. whoname);
       CleanChat_AddFlag("class", CLEANCHAT_TRANSLATE_CLASS[class], whoname);
       CleanChat_AddFlag("level", level, whoname);
+      CleanChat_AddFlag("faction", CLEANCHAT_RACE_TO_FACTION[race], whoname);
     end
   end
 end
@@ -419,10 +434,13 @@ function CleanChat_InsertRaidMembers()
   CleanChat_RemoveFlags("isRaid");
   --CleanChat_DeleteIfFlag("realm");
   for i = 1, GetNumRaidMembers() do
-    name, _, _, level, _, class = GetRaidRosterInfo(i);
+    local unit = "raid" .. i;
+    local name, _, _, level, _, class = GetRaidRosterInfo(i);
+    local faction, _ = UnitFactionGroup(unit);
     --CleanChat_Message("RAID " .. name .. " " .. level .. " " .. class);
     CleanChat_AddFlag("isRaid", true, name);
     CleanChat_AddFlag("class", CLASS_TO_INDEX[class], name);
+    CleanChat_AddFlag("faction", faction, name);
     if level ~= 0 then
       CleanChat_AddFlag("level", level, name);
     end
@@ -439,12 +457,16 @@ function CleanChat_InsertPartyMembers()
   -- add all party member
   for i = 1, GetNumPartyMembers() do
     local unit = "party" .. i;
+    local name = UnitName(unit);
     local _, class = UnitClass(unit);
+    local faction, _ = UnitFactionGroup(unit);
+    local level = UnitLevel(unit);
     --CleanChat_Message("PARTY " .. unit .. " " .. UnitName(unit) .. " " .. UnitLevel(unit) );
-    CleanChat_AddFlag("isParty", true, UnitName(unit));
-    CleanChat_AddFlag("class", CLASS_TO_INDEX[class], UnitName(unit));
-    if UnitLevel(unit) ~= 0 then
-      CleanChat_AddFlag("level", UnitLevel(unit), UnitName(unit));
+    CleanChat_AddFlag("isParty", true, name);
+    CleanChat_AddFlag("class", CLASS_TO_INDEX[class], name);
+    CleanChat_AddFlag("faction", faction, name);
+    if level ~= 0 then
+      CleanChat_AddFlag("level", level, name);
     end
   end
 end
@@ -459,6 +481,16 @@ function CleanChat_InsertGuildMembers()
     CleanChat_AddFlag("isGuild", true, name);
     CleanChat_AddFlag("class", CLEANCHAT_TRANSLATE_CLASS[class], name);
     CleanChat_AddFlag("level", level, name);
+
+    local faction = nil;
+    if class == "Paladin" then
+      faction = "Alliance";
+    elseif class == "Shaman" then
+      faction = "Horde";
+    end
+    if faction then
+      CleanChat_AddFlag("faction", faction, name);
+    end
   end
 end
 
@@ -550,21 +582,38 @@ function CleanChat_AddMessage(this, msg, r, g, b, id)
        and this.CleanChat_Name and string.len(this.CleanChat_Name) > 1
        and not (CleanChat_IgnoreEmotes and EVENTS_EMOTES[this.event])
     then
-      local level = "";
-      local strippedName = CleanChat_StripRealm(this.CleanChat_Name);
+      local authorName = CleanChat_StripRealm(this.CleanChat_Name);
+      local authorData = CleanChat_NameCache[authorName];
 
-      if CleanChat_ShowLevel and not EVENTS_EMOTES[this.event] then
-        if CleanChat_NameCache[strippedName] and CleanChat_NameCache[strippedName].level then
-          level = ":" .. CleanChat_NameCache[strippedName].level;
-        elseif CleanChat_CollectData then
-          level = ":?"
+      local level = "";
+      local faction = "";
+      local unknown = ":?";
+      if not EVENTS_EMOTES[this.event] then
+        if CleanChat_ShowLevel then
+          if authorData and authorData.level then
+            level = ":" .. authorData.level;
+          elseif CleanChat_CollectData then
+            level = unknown;
+          end
+        end
+
+        if CleanChat_ShowFaction then
+          if authorData and authorData.faction then
+            faction = ":" .. string.sub(authorData.faction, 1, 1);
+          elseif CleanChat_CollectData then
+            if level ~= unknown then
+              faction = unknown;
+            end
+          end
         end
       end
 
-      msg = string.gsub(msg, "(.-)" .. CleanChat_EscapeRealm(this.CleanChat_Name) .. "([%]%s].*)", "%1" .. CleanChat_GetColorFor(strippedName) .. this.CleanChat_Name .. level .. "|r%2", 1);
-      -- Highligh player name in chat messages
-      msg = string.gsub(msg, "(.*%s)" .. playerName .. "(.-)", "%1" .. CleanChat_GetColorFor(playerName) .. playerName .. "|r%2");
-      msg = string.gsub(msg, "(.*%s)" .. playerNameLow .. "(.-)", "%1" .. CleanChat_GetColorFor(playerName) .. playerNameLow .. "|r%2");
+      local authorColor = CleanChat_GetColorFor(authorName);
+      msg = string.gsub(msg, "(.-)" .. CleanChat_EscapeRealm(this.CleanChat_Name) .. "([%]%s].*)", "%1" .. authorColor .. this.CleanChat_Name .. level .. faction .. "|r%2", 1);
+
+      local playerColor = CleanChat_GetColorFor(playerName);
+      msg = string.gsub(msg, "(.*%s)" .. playerName .. "(.-)", "%1" .. playerColor .. playerName .. "|r%2");
+      msg = string.gsub(msg, "(.*%s)" .. playerNameLow .. "(.-)", "%1" .. playerColor .. playerNameLow .. "|r%2");
     end
 
     -- popup if message contains player name and is not an emote and message not send by player
@@ -622,7 +671,7 @@ function CleanChat_GetColorFor(name)
     CleanChat_NameCache[name] = {};
   end
 
-  if CleanChat_CollectData and CleanChat_NameCache[name].level == nil then
+  if CleanChat_CollectData and (CleanChat_NameCache[name].level == nil or CleanChat_NameCache[name].faction == nil) then
     whoTimestamp = GetTime();
     SendWho("n-" .. name);
   end

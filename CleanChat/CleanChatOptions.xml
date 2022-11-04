@@ -386,6 +386,34 @@
         </Scripts>
       </CheckButton>
 
+      <!-- Checkbox to show faction -->
+      <CheckButton name="CleanChatShowFaction" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="CleanChatShowLevelText" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="0" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            CleanChatShowFactionText:SetText(CLEANCHAT_SHOWFACTION);
+            CleanChatShowFactionText:SetTextHeight(12);
+            CleanChatShowFactionText:SetJustifyH("LEFT");
+          </OnLoad>
+          <OnShow>
+            if CleanChat_ShowFaction then
+              this:SetChecked(1);
+            else
+              this:SetChecked(0);
+            end
+          </OnShow>
+          <OnClick>
+            CleanChat_ShowFaction = not CleanChat_ShowFaction;
+          </OnClick>
+        </Scripts>
+      </CheckButton>
+
       <!-- Checkbox to enable mouse wheel -->
       <CheckButton name="CleanChatMouseWheel" inherits="OptionsCheckButtonTemplate">
         <Anchors>

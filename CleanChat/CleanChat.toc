@@ -1,13 +1,13 @@
 ## Interface: 11200
 ## Title: CleanChat
-## Notes: Colorize names, shows level, shortens channel names and more.
+## Notes: Colorize names, shows level and faction, shortens channel names and more.
 ## Notes-deDE: Farbige Namen, Levelanzeige, k\195\188rzt Kanalname und mehr.
-## Notes-frFR: Colorize names, shows level, shortens channel names and more.
-## SavedVariables: CleanChat_IsColorizeNicks CleanChat_IsRandomColor CleanChat_IsHidePrefix CleanChat_HideChannelnames CleanChat_IsClassColor CleanChat_Colors CleanChat_GuiColors CleanChat_UseCursorKeys CleanChat_HideChatButtons CleanChat_ShowLevel CleanChat_CollectData CleanChat_EnableMouseWheel CleanChat_Popup CleanChat_IgnoreEmotes CleanChat_URLs
+## Notes-frFR: Colorize names, shows level and faction, shortens channel names and more.
+## SavedVariables: CleanChat_IsColorizeNicks CleanChat_IsRandomColor CleanChat_IsHidePrefix CleanChat_HideChannelnames CleanChat_IsClassColor CleanChat_Colors CleanChat_GuiColors CleanChat_UseCursorKeys CleanChat_HideChatButtons CleanChat_ShowLevel CleanChat_ShowFaction CleanChat_CollectData CleanChat_EnableMouseWheel CleanChat_Popup CleanChat_IgnoreEmotes CleanChat_URLs
 ## SavedVariablesPerCharacter: CleanChat_NameCache, CleanChat_UsedColors, CleanChat_IsPersistent
 ## OptionalDeps: myAddOns
 ## Author: Bastian Pflieger (wbb)
-## Version: v18
+## Version: v19t
 ## X-Email: wbb1977@gmail.com
 ## X-Date: 2018-12-27
 ## X-Category: MYADDONS_CATEGORY_CHAT

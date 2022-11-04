@@ -121,6 +121,7 @@ if GetLocale() == "deDE" then
   CLEANCHAT_HIDE_CHATBUTTONS = "Chatbuttons verstecken.";
   CLEANCHAT_COLLECTDATA = "Addon darf /who Kommando benutzen."
   CLEANCHAT_SHOWLEVEL = "Zeige Level im Chat an.";
+  CLEANCHAT_SHOWFACTION = "Show faction in chat."
   CLEANCHAT_MOUSEWHEEL = "Mausrad zum Scrollen verwenden.";
   CLEANCHAT_PERSISTENT = "Gesammelte Informationen zwischenspeichern.";
   CLEANCHAT_POPUP = "Chatnachricht gro\195\159 anzeigen falls mein Name enthalten ist.";

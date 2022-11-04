@@ -186,6 +186,7 @@ if GetLocale() == "koKR" then
   CLEANCHAT_COLLECTDATA = "/누구 명령어를 사용하여 데이터 수집";--"Allow addon to use /who command.";
   CLEANCHAT_PERSISTENT = "수집된 자료 저장.";
   CLEANCHAT_SHOWLEVEL = "채팅창에 레벨 표시.";
+  CLEANCHAT_SHOWFACTION = "Show faction in chat."
   CLEANCHAT_MOUSEWHEEL = "마우스 휠을 이용하여 스크롤.";
   CLEANCHAT_POPUP = "Show chat message on screen if it contains your name.";
   CLEANCHAT_IGNORE_EMOTES = "Do not colorize names in emotes."

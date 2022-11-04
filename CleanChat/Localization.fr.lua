@@ -124,6 +124,7 @@ if GetLocale() == "frFR" then
 
   CLEANCHAT_COLLECTDATA = "Autorise l'utilisation de la commande /who";
   CLEANCHAT_SHOWLEVEL = "Affiche le level dans la fenêtre de discussion"
+  CLEANCHAT_SHOWFACTION = "Show faction in chat."
   CLEANCHAT_MOUSEWHEEL = "Utilise la molette pour défiler";
   CLEANCHAT_PERSISTENT = "Enregistrer les infos collectées";
   CLEANCHAT_POPUP = "Afficher le message de discussion sur l'écran si il contient votre nom";
