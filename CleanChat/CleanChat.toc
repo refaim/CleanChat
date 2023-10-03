@@ -7,9 +7,9 @@
 ## SavedVariablesPerCharacter: CleanChat_NameCache, CleanChat_UsedColors, CleanChat_IsPersistent
 ## OptionalDeps: myAddOns
 ## Author: Bastian Pflieger (wbb)
-## Version: v19t
+## Version: v20
 ## X-Email: wbb1977@gmail.com
-## X-Date: 2018-12-27
+## X-Date: 2023-10-03
 ## X-Category: MYADDONS_CATEGORY_CHAT
 ## X-Help: CLEANCHAT_HELP
 ## X-OptionsFrame: CleanChatOptionsFrame

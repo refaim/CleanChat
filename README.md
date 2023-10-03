@@ -1,5 +1,5 @@
-# CleanChat v19t
-Vanilla World of Warcraft Chat Addon
+# CleanChat
+Turtle WoW Chat Addon
 
 # Functions
 * Removes [Guild], [Party], [Raid] and [Officer] prefix from chat.

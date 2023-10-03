@@ -25,38 +25,51 @@
   CLEANCHAT_MYADDONS_DESCRIPTION = "Colorize names, shows level, shortens channel names and more.";
 
   CLEANCHAT_CHANNELS = {
+    -- Channel names are shown.
     {},
+
+    -- Channel names General and Trade are not shown
     { ["__PREFIX"] = "\. ",
       ["General"] = "",
       ["Trade"] = "" },
+
+    -- Channel names General, Trade, LookingForGroup and Defense are not shown
+    { ["__PREFIX"] = "\. ",
+      ["General"] = "",
+      ["Trade"] = "",
+      ["LocalDefense"] = "",
+      ["WorldDefense"] = "",
+      ["LookingForGroup"] = "" },
+
+    -- Hide all channel names
     { ["__PREFIX"] = "\. ",
       ["General"] = "",
       ["Trade"] = "",
       ["LocalDefense"] = "",
       ["WorldDefense"] = "",
       ["LookingForGroup"] = "",
-      ["GuildRecruitment"] = "" },
-    { ["__PREFIX"] = "\. ",
-      ["General"] = "",
-      ["Trade"] = "",
-      ["LocalDefense"] = "",
-      ["WorldDefense"] = "",
-      ["LookingForGroup"] = "",
-      ["GuildRecruitment"] = "" },
+      ["GuildRecruitment"] = "",
+      ["Hardcore"] = "" },
+
+    -- Use abbreviation: G - General, T - Trade, LFG - LookingForGroup
     { ["__PREFIX"] = "%d\. ",
       ["General"] = "G",
       ["Trade"] = "T",
       ["LocalDefense"] = "L",
       ["WorldDefense"] = "W",
       ["LookingForGroup"] = "LFG",
-      ["GuildRecruitment"] = "GR" },
+      ["GuildRecruitment"] = "GR",
+      ["Hardcore"] = "HC" },
+
+    -- Use abbreviation and hide other channel names
     { ["__PREFIX"] = "%d\. ",
       ["General"] = "G",
       ["Trade"] = "T",
       ["LocalDefense"] = "L",
       ["WorldDefense"] = "W",
       ["LookingForGroup"] = "LFG",
-      ["GuildRecruitment"] = "GR" } };
+      ["GuildRecruitment"] = "GR",
+      ["Hardcore"] = "HC" } };
 
   CLEANCHAT_PREFIX_RAID = {
     [false] = CHAT_RAID_GET,
@@ -97,10 +110,10 @@
   CLEANCHAT_STATUS3 = {
     "Channel names are shown.",
     "Channel names General and Trade are not shown.",
-    "Channel names Genereal, Trade, LookingForGroup and Defense are not shown.",
+    "Channel names General, Trade, LookingForGroup and Defense are not shown.",
     "Hide all channel names.",
-    "Use abbreviation: G - General, T - Trade, LFG - LookingForGroup.",
-    "Use abbreviation and hide other channel names." };
+    "Use abbreviations: G - General, T - Trade, HC - Hardcore.",
+    "Use abbreviations and hide other channel names." };
 
   CLEANCHAT_STATUS4 = "Custom color for %s%s %s%s";
   CLEANCHAT_STATUS5 = { "guild members", "friends", "others", "party members", "raid members", "names without class information", "myself" };

@@ -544,9 +544,17 @@ function CleanChat_ChatFrame_OnEvent(event)
   -- Save event data
   this.CleanChat_Name = arg2;
   this.event = event;
-  -- Strip channel name
-  if arg9 and event ~= "CHAT_MSG_CHANNEL_NOTICE" then
-    local _, _, strippedChannelName = string.find(arg9, "([%aé]*)");
+
+  ---@type string|nil
+  local strippedChannelName
+  if event == "CHAT_MSG_HARDCORE" then
+    strippedChannelName = "Hardcore"
+  elseif arg9 and event ~= "CHAT_MSG_CHANNEL_NOTICE" then
+    local _, _, match = string.find(arg9, "([%aé]*)");
+    strippedChannelName = --[[---@type string]] match
+  end
+
+  if strippedChannelName ~= nil then
     if CLEANCHAT_CHANNELS[CleanChat_HideChannelnames][strippedChannelName] then
       this.CleanChat_Channelname = strippedChannelName;
       this.CleanChat_IsCustomChannel = false;
@@ -565,18 +573,42 @@ function CleanChat_ChatFrame_OnEvent(event)
 end
 
 function CleanChat_AddMessage(this, msg, r, g, b, id)
+  ---@type string
+  local channelName = this.CleanChat_Channelname
+  if channelName == nil then
+    channelName = ""
+  end
+
+  ---@type boolean|nil
+  local isChannelCustom = this.CleanChat_IsCustomChannel
+
   if msg then -- looks like some addons send nil messages
-    -- Remove channel name
-    if this.CleanChat_Channelname and this.CleanChat_IsCustomChannel ~= nil then
-      if this.CleanChat_IsCustomChannel then
-        msg = string.gsub(msg, "\. " .. this.CleanChat_Channelname, "", 1);
+    if channelName ~= "" and isChannelCustom ~= nil then
+      if isChannelCustom then
+        msg, _ = string.gsub(msg, "\. " .. channelName, "", 1);
       else
-        msg = string.gsub(msg,
-                          CLEANCHAT_CHANNELS[CleanChat_HideChannelnames]["__PREFIX"] .. this.CleanChat_Channelname,
-                          CLEANCHAT_CHANNELS[CleanChat_HideChannelnames][this.CleanChat_Channelname],
-                          1);
+        ---@type table<string, string>
+        local settings = CLEANCHAT_CHANNELS[CleanChat_HideChannelnames]
+
+        ---@type string
+        local pattern
+        ---@type string
+        local replacement
+        if channelName == "Hardcore" then
+          pattern = "%[Hardcore%] "
+          replacement = settings[channelName]
+          if replacement ~= "" then
+            replacement = "[" .. replacement .. "] "
+          end
+        else
+          pattern = settings["__PREFIX"] .. channelName
+          replacement = settings[channelName]
+        end
+
+        msg, _ = string.gsub(msg, pattern, replacement, 1)
       end
     end
+
     -- Colorize name
     if CleanChat_IsColorizeNicks
        and this.CleanChat_Name and string.len(this.CleanChat_Name) > 1
